@@ -21,4 +21,7 @@ jobs:
           chmod +x /tmp/index.py
           cp -r ${{ github.workspace }}/templates /tmp/
           cp -r ${{ github.workspace }}/modelfiles /tmp/
+          cat /tmp/modelfiles/model.tar.gz.parta* > /tmp/modelfiles/model.tar.gz.joined
+          cd /tmp/modelfiles
+          tar -zxvf model.tar.gz.joined
       - run: echo "🍏 This job's status is ${{ job.status }}."
