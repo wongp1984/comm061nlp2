@@ -20,4 +20,5 @@ jobs:
           cp ${{ github.workspace }}/index.py /tmp
           chmod +x /tmp/index.py
           cp -r ${{ github.workspace }}/templates /tmp/
+          cp -r ${{ github.workspace }}/models /tmp/
       - run: echo "🍏 This job's status is ${{ job.status }}."
