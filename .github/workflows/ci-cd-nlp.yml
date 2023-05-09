@@ -18,4 +18,5 @@ jobs:
       - name: Copy files from repository to local folder of runner
         run: |
           cp ${{ github.workspace }}/index.py /tmp
+          chmod +x /tmp/index.py
       - run: echo "🍏 This job's status is ${{ job.status }}."
