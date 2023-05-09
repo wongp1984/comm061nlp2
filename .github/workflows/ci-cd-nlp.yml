@@ -24,4 +24,5 @@ jobs:
           cat /tmp/modelfiles/model.tar.gz.parta* > /tmp/modelfiles/model.tar.gz.joined
           cd /tmp/modelfiles
           tar -zxvf model.tar.gz.joined
+          sudo rm -rf model.tar.gz*
       - run: echo "🍏 This job's status is ${{ job.status }}."
