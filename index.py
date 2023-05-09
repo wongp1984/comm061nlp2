@@ -14,6 +14,8 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 max_input_length = tokenizer.max_model_input_sizes['bert-base-uncased']
 
+print('***test0')
+
 # For Data preprocessing
 class TransformerTokenizer(torch.nn.Module):
     def __init__(self, tokenizer):
@@ -32,6 +34,8 @@ class TransformerTokenizer(torch.nn.Module):
         
 tokenizer_vocab = vocab(tokenizer.vocab, min_freq=0)
 
+print('***test1')
+
 import torchtext.transforms as T
 
 text_transform = T.Sequential(
@@ -42,6 +46,8 @@ text_transform = T.Sequential(
     T.AddToken(token=tokenizer_vocab["[SEP]"], begin=False),  # EOS token
     T.ToTensor(padding_value=tokenizer_vocab["[PAD]"]),  # Convert to tensor and pad
 )
+
+print('***test2')
 
 preds_dict_r={'neutral': 0,
  'admiration': 1,
