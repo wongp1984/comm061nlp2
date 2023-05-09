@@ -70,10 +70,14 @@ print('***test3')
 
 # Model Definition
 from transformers import BertTokenizer, BertModel
-
-bert = BertModel.from_pretrained('bert-base-uncased')
-
 print('***test4')
+
+try:
+    bert = BertModel.from_pretrained('bert-base-uncased')
+except Exception as e:
+    print(f'Exception! {e}')
+
+print('***test5')
 
 class BERTGRUSentiment(nn.Module):
     def __init__(self, bert, hidden_dim, output_dim, n_layers, bidirectional, dropout):        
