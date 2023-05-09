@@ -124,7 +124,7 @@ DROPOUT = 0.25
 model = BERTGRUSentiment(bert, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
 model = model.to(DEVICE)
 
-model.load_state_dict(torch.load('modelfiles/tut4-model_cpu2.pt'))
+model.load_state_dict(torch.load('/tmp/modelfiles/tut4-model_cpu.pt'))
 model = model.eval()
 
 app = Flask(__name__)
