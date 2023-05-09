@@ -124,41 +124,5 @@ DROPOUT = 0.25
 model = BERTGRUSentiment(bert, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
 model = model.to(DEVICE)
 
-model.load_state_dict(torch.load('modelfiles/tut4-model_cpu2.pt'))
+model.load_state_dict(torch.load('/tmp/modelfiles/tut4-model_cpu.pt'))
 model = model.eval()
-
-app = Flask(__name__)
-
-########################################
-# for logging the user inputs
-def LogActivity(input_time, user_input, prediction_time, predict_result):
-    current = datetime.now()
-    fname = 'action_log' + current.strftime('%Y%m%d')
-    with open(fname, 'a') as fp:
-        fp.write(f"'{input_time}', '{user_input}', '{prediction_time}', '{predict_result}'\n")
-    
-########################################
-
-@app.route("/", methods=["GET", "POST"])
-def predict_emotion():
-    if request.method == "GET":
-        return render_template("index.html")
-    if request.method == "POST":
-        input_text = request.form["input_text"]
-        # DataPreprocessing
-        data=text_transform([input_text]).to(DEVICE)
-        input_time = datetime.now()
-        
-        # prediction
-        output = model(data)
-        prediction = torch.max(output, 1)[1].item()
-        result = preds_dict[prediction]
-        prediction_time = datetime.now()
-        
-        LogActivity(input_time, input_text, prediction_time, result)
-
-        return render_template("index.html", display_text=input_text, result=result)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
