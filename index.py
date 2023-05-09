@@ -66,10 +66,14 @@ preds_dict_r={'neutral': 0,
 
 preds_dict = {v: k for k, v in preds_dict_r.items()}
 
+print('***test3')
+
 # Model Definition
 from transformers import BertTokenizer, BertModel
 
 bert = BertModel.from_pretrained('bert-base-uncased')
+
+print('***test4')
 
 class BERTGRUSentiment(nn.Module):
     def __init__(self, bert, hidden_dim, output_dim, n_layers, bidirectional, dropout):        
@@ -121,6 +125,8 @@ class BERTGRUSentiment(nn.Module):
 
         return self.out(hidden)
 
+print('***test5')
+
 HIDDEN_DIM = 64  # 254 is better, less than 64 is no very favourable.
 OUTPUT_DIM = 14  # We only need one neuron as output
 N_LAYERS = 2
@@ -130,10 +136,16 @@ DROPOUT = 0.25
 model = BERTGRUSentiment(bert, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
 model = model.to(DEVICE)
 
+print('***test6')
+
 model.load_state_dict(torch.load('/tmp/modelfiles/tut4-model_cpu.pt'))
 model = model.eval()
 
+print('***test7')
+
 app = Flask(__name__)
+
+print('***test8')
 
 ########################################
 # for logging the user inputs
