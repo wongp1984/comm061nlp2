@@ -1,12 +1,24 @@
 <html>
     <body>
         {% if result %}
-          <p> input_text is below.</p><BR>
-          <p>{{display_text}} </p><BR>
-          <p> Predicted Emotion is below.</p><BR>
-          <p>{{result}} </p><BR>
+          <p> 
+            <h1 style="font-size:1.2em">
+               Input text for classification is below:
+            </h1>
+         </p>
+          <p style="color:blue">{{display_text}} </p>
+          <p> 
+            <h2 style="font-size:1.2em">
+               The predicted emotion is below.
+            </h2>
+         </p>
+          <p>
+            <h3 style="color:red">
+               {{result}} 
+            </h3>
+         </p>
         {% endif %}
-        input the text<BR>
+        input the text
         <form action = "./" method = "POST" enctype = "multipart/form-data">
            <input type="text" name="input_text" size="200" value="input the text"></p>
            <input type = "submit"/>
