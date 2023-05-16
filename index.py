@@ -145,7 +145,7 @@ def LogActivity(input_time, user_input, prediction_time, predict_result):
     current = datetime.now()
     fname = 'action_log' + current.strftime('%Y%m%d')
     with open(fname, 'a') as fp:
-        fp.write(f"'{input_time}', '{user_input}', '{prediction_time}', '{predict_result}'\n")
+        fp.write(f"'{input_time}','{user_input}','{prediction_time}','{predict_result}'\n")
     
 
 
@@ -177,6 +177,7 @@ def getlog():
     
     current = datetime.now()
     
+    htmltext = '<p>input_time,input_text,predcition_time,result</p>'
     for i in range(0, 8):
         logdate = current - timedelta(days=i)
         fname = 'action_log' + logdate.strftime('%Y%m%d')
@@ -185,10 +186,12 @@ def getlog():
             f1 = open(fname, 'r')
             Lines = f1.readlines()
             f1.close()
+            
+            htmltext += ''.join(['<p>' + line.strip() + '</p>' for line in Lines])
         except Exception as e:
             continue
         
-    return '<p>1 2 3 4 5 6</p><p>6 7 8 989 999</p>'
+    return htmltext
 
 
 if __name__ == "__main__":
