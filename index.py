@@ -181,9 +181,12 @@ def getlog():
         logdate = current - timedelta(days=i)
         fname = 'action_log' + logdate.strftime('%Y%m%d')
         
-        f1 = open(fname, 'r')
-        Lines = f1.readlines()
-        f1.close()
+        try: 
+            f1 = open(fname, 'r')
+            Lines = f1.readlines()
+            f1.close()
+        except Exception as e:
+            continue
         
     return '<p>1 2 3 4 5 6</p><p>6 7 8 989 999</p>'
 
