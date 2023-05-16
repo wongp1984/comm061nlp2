@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from torchtext.vocab import vocab
 from torchtext.data.utils import get_tokenizer
 from transformers import BertTokenizer
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -138,15 +138,16 @@ model = model.eval()
 
 app = Flask(__name__)
 
-########################################
-# for logging the user inputs
+
+
 def LogActivity(input_time, user_input, prediction_time, predict_result):
+    '''For logging the user inputs and running time into daily log file'''
     current = datetime.now()
     fname = 'action_log' + current.strftime('%Y%m%d')
     with open(fname, 'a') as fp:
         fp.write(f"'{input_time}', '{user_input}', '{prediction_time}', '{predict_result}'\n")
     
-########################################
+
 
 @app.route("/", methods=["GET", "POST"])
 def predict_emotion():
@@ -167,6 +168,24 @@ def predict_emotion():
         LogActivity(input_time, input_text, prediction_time, result)
 
         return render_template("index.html", display_text=input_text, result=result)
+
+
+@app.route('/getlog')
+    
+def getlog():
+    '''Get last 7 days log'''
+    
+    current = datetime.now()
+    
+    for i in range(0, 8):
+        logdate = current - timedelta(days=i)
+        fname = 'action_log' + logdate.strftime('%Y%m%d')
+        
+        f1 = open(fname, 'r')
+        Lines = f1.readlines()
+        f1.close()
+        
+    return '<p>1 2 3 4 5 6</p><p>6 7 8 989 999</p>'
 
 
 if __name__ == "__main__":
