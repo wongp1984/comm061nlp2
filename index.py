@@ -171,13 +171,12 @@ def predict_emotion():
 
 
 @app.route('/getlog')
-    
 def getlog():
     '''Get last 7 days log'''
     
     current = datetime.now()
     
-    htmltext = '<p>input_time,input_text,predcition_time,result</p>'
+    htmltext = '<p>input_run_time,input_text,end_run_time,result</p>'
     for i in range(0, 8):
         logdate = current - timedelta(days=i)
         fname = 'action_log' + logdate.strftime('%Y%m%d')
