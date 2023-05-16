@@ -14,7 +14,6 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 max_input_length = tokenizer.max_model_input_sizes['bert-base-uncased']
 
-print('***test0')
 
 # For Data preprocessing
 class TransformerTokenizer(torch.nn.Module):
@@ -34,7 +33,6 @@ class TransformerTokenizer(torch.nn.Module):
         
 tokenizer_vocab = vocab(tokenizer.vocab, min_freq=0)
 
-print('***test1')
 
 import torchtext.transforms as T
 
@@ -47,7 +45,6 @@ text_transform = T.Sequential(
     T.ToTensor(padding_value=tokenizer_vocab["[PAD]"]),  # Convert to tensor and pad
 )
 
-print('***test2')
 
 preds_dict_r={'neutral': 0,
  'admiration': 1,
@@ -66,11 +63,10 @@ preds_dict_r={'neutral': 0,
 
 preds_dict = {v: k for k, v in preds_dict_r.items()}
 
-print('***test3')
 
 # Model Definition
 from transformers import BertTokenizer, BertModel
-print('***test4')
+
 
 try:
     bert = BertModel.from_pretrained('bert-base-uncased')
@@ -128,8 +124,6 @@ class BERTGRUSentiment(nn.Module):
 
         return self.out(hidden)
 
-print('***test5')
-
 HIDDEN_DIM = 64  # 254 is better, less than 64 is no very favourable.
 OUTPUT_DIM = 14  # We only need one neuron as output
 N_LAYERS = 2
@@ -139,16 +133,10 @@ DROPOUT = 0.25
 model = BERTGRUSentiment(bert, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS, BIDIRECTIONAL, DROPOUT)
 model = model.to(DEVICE)
 
-print('***test6')
-
 model.load_state_dict(torch.load('/tmp/modelfiles/tut4-model_cpu.pt'))
 model = model.eval()
 
-print('***test7')
-
 app = Flask(__name__)
-
-print('***test8')
 
 ########################################
 # for logging the user inputs
@@ -182,5 +170,5 @@ def predict_emotion():
 
 
 if __name__ == "__main__":
-    # app.run(host='0.0.0.0', debug=True, port=80)
-    app.run(host='127.0.0.1', debug=True)
+    app.run(host='0.0.0.0', debug=True)
+    # app.run(host='127.0.0.1', debug=True)
