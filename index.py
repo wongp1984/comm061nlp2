@@ -155,6 +155,10 @@ def predict_emotion():
         return render_template("index.html")
     if request.method == "POST":
         input_text = request.form["input_text"]
+        
+        print(f'*****input_text: {request.form["input_text"]}')
+        print(f'*****input-field: {request.form["input-field"]}')
+        
         # DataPreprocessing
         data=text_transform([input_text]).to(DEVICE)
         input_time = datetime.now()
