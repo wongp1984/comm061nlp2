@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Classification UI</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .message-container {
+            margin-bottom: 20px;
+        }
+
+        .user-message {
+            background-color: #171717;
+            color: #ffffff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ai-message {
+            background-color: #f8f9fa;
+            border: 1px solid #70ddea;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #171717;
+            border-color: #171717;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #171717;
+            border-color: #171717;
+        }
+
+        #input-field:focus {
+            border-color: #171717 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1>Text Classification UI</h1>
+        <div id="chat-container">
+            <div class="message-container">
+                <!-- <div class="user-message">Hello!</div>
+                <div class="ai-message">Hi there! How can I assist you today?</div> -->
+            </div>
+        </div>
+        <form id="model-form">
+            <div class="input-group mb-3">
+                <input type="text" required class="form-control shadow-none outline-none" id="input-field"
+                    placeholder="Type your message">
+                <button type="submit" class="btn btn-primary shadow-none">Send</button>
+            </div>
+        </form>
+    </div>
+    <!-- Include Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // When form is submitted
+            $("#model-form").submit(function (e) {
+                e.preventDefault(); // Prevent page from reloading
+                var userMessage = $("#input-field").val(); // Get user's message
+                $("#chat-container").append('<div class="message-container"><div class="user-message">' + userMessage + '</div></div>'); // Display user's message
+                $("#input-field").val(""); // Clear input field
+
+                // Send user message to Flask server for text classification
+                $.ajax({
+                    url: "http://localhost:5050/classify", // Replace 5050 with the desired port number
+                    type: "POST",
+                    contentType: "application/json",
+                                        data: JSON.stringify({ "text": userMessage }),
+                    success: function (response) {
+                        // Handle the response from the Flask server
+                        var classificationResult = response.result; // Assuming the server responds with a "result" field
+                        var aiMessage = "Classification: " + classificationResult;
+                        $("#chat-container").append('<div class="message-container"><div class="ai-message">' + aiMessage + '</div></div>');
+                    },
+                    error: function (error) {
+                        console.error("Error:", error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
