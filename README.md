@@ -6,5 +6,5 @@ This repository contains the code for the coursework of COMM061 NLP module. The 
 #### Individual Coursework
 The jupyter notebooks elaborating the experimentation results can be found in [individual work](https://github.com/wongp1984/comm061nlp2/tree/master/IndividualCoursework).
 
-### Groupwork
-The run
+#### Groupwork
+The [run_app.ipynb](https://github.com/wongp1984/comm061nlp2/blob/master/run_app.ipynb) will lanuch a simple webapp using Flask, which in the backend will call the ML model to predict the emotion labels and an input text. 
